@@ -1,5 +1,5 @@
-import app from "./backend/app.js";
-import "./backend/database.js"
+import app from "./app.js";
+import "./database.js"
 
 //Creo una funcion para ejecutar el servidor
 async function main() {
