@@ -5,10 +5,18 @@ import employeesRoutes from "./src/routes/employees.js"
 import customersRoutes from "./src/routes/customers.js";
 import registerCustomerRoutes from "./src/routes/registerCustomer.js"
 import cookieParser from "cookie-parser";
+import loginCustomerRoutes from "./src/routes/loginCustomer.js"
+import logoutRoutes from "./src/routes/logout.js";
+import cors from "cors"
 
 
 //Creo una constante que es igual a la libreria Express
 const app = express();
+
+app.use(cors({
+    origin: ["https://localhost:5173", "http://localhost:5174"],
+    credentials: true
+}))
 
 app.use(cookieParser());
 
@@ -20,6 +28,7 @@ app.use("/api/branches", branchesRoutes)
 app.use("/api/employees", employeesRoutes)
 app.use("/api/customers", customersRoutes)
 app.use("/api/registerCustomer", registerCustomerRoutes)
-app.use("/api/registerEmployee")
+app.use("/api/loginCustomer", loginCustomerRoutes)
+app.use("/api/logout", logoutRoutes)
 
 export default app;
