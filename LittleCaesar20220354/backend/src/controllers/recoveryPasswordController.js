@@ -95,3 +95,34 @@ recoveryPasswordController.requestCode = async (req, res) => {
         }
     }
 }
+
+recoveryPasswordController.newPassword = async (req,res) => {
+    try {
+        const {newPassword, confirmPassword} = req.body;
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({message: "Password doesnt match"})
+        }
+
+        //comprobar que la constante verified que esta en el token sea true 
+        const token = req.cookies.recoveryCookie;
+        const decoded = jsonwebtoken.verify(token, config.JWT.secret);
+
+        if (!decoded.verified) {
+            return res.status(400).json({message: "Code not verified"})
+        }
+
+        //encriptar la contraseña
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+
+        //actualizar la contraseña de la base de datos
+        await customerModel.findOneAndUpdate({email: decoded.email}, {password: passwordHash}, {new: true});
+
+        res.clearCookie("recoveryCookie");
+
+        return res.status(200).json({message: "Password updated"})
+    } catch (error) {
+        console.log("error" + error)
+        return res.status(500).json({message: "Internal server error"})
+    }
+}
