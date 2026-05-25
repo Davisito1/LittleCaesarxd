@@ -12,8 +12,8 @@ providersController.getAllProviders = async (req, res) => {
         return res.status(500).json({message: "Internal server error"})
     }
 }
-
-providersController.inserProviders = async (req, res) => {
+    
+providersController.insertProvider = async (req, res) => {
     try {
         const {name, phone} = req.body
 
@@ -75,4 +75,4 @@ providersController.deleteProvider = async (req, res) => {
     }
 }
 
-export default providersController
+export default providersController  

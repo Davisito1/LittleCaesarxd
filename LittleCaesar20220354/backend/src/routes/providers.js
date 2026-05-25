@@ -6,7 +6,7 @@ const router = expres.Router()
 
 router.route("/")
 .get(providerController.getAllProviders)
-.post(providerController.inserProviders)
+.post(providerController.insertProvider)
 
 router.route("/:id")
 .put(upload.single("image"), providerController.updateProvider)
