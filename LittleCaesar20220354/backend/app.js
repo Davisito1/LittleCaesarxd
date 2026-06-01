@@ -9,8 +9,9 @@ import loginCustomerRoutes from "./src/routes/loginCustomer.js"
 import logoutRoutes from "./src/routes/logout.js";
 import providersRoutes from "./src/routes/providers.js";
 import cartRoutes from "./src/routes/cart.js"
+import wompiRoutes from "./src/routes/wompi.js"
+import deliveriesRoutes from "./src/routes/deliveries.js"
 import cors from "cors"
-
 
 //Creo una constante que es igual a la libreria Express
 const app = express();
@@ -34,5 +35,7 @@ app.use("/api/loginCustomer", loginCustomerRoutes)
 app.use("/api/logout", logoutRoutes)
 app.use("/api/providers", providersRoutes)
 app.use("/api/cart", cartRoutes)
+app.use("/api/wompi", wompiRoutes)
+app.use("/api/deliveries", deliveriesRoutes)
 
 export default app;
