@@ -12,6 +12,10 @@ import cartRoutes from "./src/routes/cart.js"
 import wompiRoutes from "./src/routes/wompi.js"
 import deliveriesRoutes from "./src/routes/deliveries.js"
 import cors from "cors"
+import { validateAuthCookie } from "./src/middlewares/authMiddleware.js";
+import adminRoutes from "./src/routes/admins.js"
+import registerAdminRoutes from "./src/routes/registerAdmin.js";
+import loginAdminRoutes from "./src/routes/loginAdmin.js"
 
 //Creo una constante que es igual a la libreria Express
 const app = express();
@@ -28,7 +32,7 @@ app.use(express.json());
 
 app.use("/api/pizzas", pizzaRoutes)
 app.use("/api/branches", branchesRoutes)
-app.use("/api/employees", employeesRoutes)
+app.use("/api/employees", validateAuthCookie(["admin"]), employeesRoutes)
 app.use("/api/customers", customersRoutes)
 app.use("/api/registerCustomer", registerCustomerRoutes)
 app.use("/api/loginCustomer", loginCustomerRoutes)
@@ -37,5 +41,8 @@ app.use("/api/providers", providersRoutes)
 app.use("/api/cart", cartRoutes)
 app.use("/api/wompi", wompiRoutes)
 app.use("/api/deliveries", deliveriesRoutes)
+app.use("/api/admins", adminRoutes)
+app.use("/api/registerAdmin", registerAdminRoutes)
+app.use("/api/loginAdmin", loginAdminRoutes)
 
 export default app;

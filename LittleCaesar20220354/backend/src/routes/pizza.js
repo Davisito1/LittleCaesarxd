@@ -1,14 +1,15 @@
 import express from "express"
 import pizzasController from "../controllers/pizzaController.js"
+import { validateAuthCookie } from "../middlewares/authMiddleware.js"
 
-//Router() nos ayuda a colocar los metodos
+//Router() nos ayuda a colocar los metodos  
 //qe tendra el endpoint
 
 const router = express.Router()
 
 router.route("/")
-.get(pizzasController.getPizzas)
-.post(pizzasController.insertPizza)
+.get(validateAuthCookie(["admin", "customer"]),pizzasController.getPizzas)
+.post(validateAuthCookie(["admin"]), pizzasController.insertPizza)
 
 router.route("/low-stock")
 .post(pizzasController.getLowStock)
@@ -24,7 +25,7 @@ router.route("/search-name")
 
 router.route("/:id")
 .get(pizzasController.getPizzaById)
-.put(pizzasController.updatePizza)
-.delete(pizzasController.deletePizzas)
+.put(validateAuthCookie("admin", "repartidores"), pizzasController.updatePizza)
+.delete(validateAuthCookie("admin"), pizzasController.deletePizzas)
 
 export default router

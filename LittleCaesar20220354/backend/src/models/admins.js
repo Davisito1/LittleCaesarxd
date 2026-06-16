@@ -4,9 +4,6 @@ const adminsModel = new Schema({
     name: {
         type: String
     },
-    lastName: {
-        type: String
-    },
     email: {
         type: String
     },
@@ -15,6 +12,12 @@ const adminsModel = new Schema({
     },
     isVerified: {
         type: Boolean
+    },
+    loginAttempts: {
+        type: String
+    },
+    timeOut: {
+        type: Date
     }
 }, {
     timestamps: true,

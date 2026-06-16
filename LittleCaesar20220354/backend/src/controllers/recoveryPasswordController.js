@@ -24,7 +24,7 @@ recoveryPasswordController.requestCode = async (req, res) => {
 
         const token = jsonwebtoken.sign(
             //que vamos a guardar
-            {email, randomCode, userTyepe: "customer", verified: false},
+            {email, randomCode, userType: "customer", verified: false},
             //secret key
             config.JWT.secret,
             //cuando expira
@@ -62,37 +62,37 @@ recoveryPasswordController.requestCode = async (req, res) => {
         console.log("error" + error)
         return res.status(500).json({message: "Internal server error"})       
     }
+}
 
-    recoveryPasswordController.verifyCode = async (req, res) => {
-        try {
-            const {code} = req.body;
+recoveryPasswordController.verifyCode = async (req, res) => {
+    try {
+        const {code} = req.body;
 
-            //obtenemos la informacion que esta dentro del token
-            //accedemos a la cookie
-            const token = req.cookies.recoveryCookie;
-            const decoded = jsonwebtoken.verify(token, config.JWT.secret);
+        //obtenemos la informacion que esta dentro del token
+        //accedemos a la cookie
+        const token = req.cookies.recoveryCookie;
+        const decoded = jsonwebtoken.verify(token, config.JWT.secret);
 
             //comparar el codigo que el usuario escribio con el que esta guardado en el token
-            if (code !== decoded.randomCode) {
-                return res.status(400).json({message: "Invalid code"})
-            }
-
-            const newToken = jsonwebtoken.sign(
-                //que vamos a guardar
-                {email: decoded.email, userTyepe: "customer", verified: true},
-                //secret key
-                config.JWT.secret,
-                //cuando expira
-                {expiresIn: "15m"},
-            );
-
-            res.cookie("recoveryCoookie", newToken, {maxAge: 15 * 60 * 1000});
-
-            return res.status(200).json({message: "Code verified successfully"})
-        } catch (error) {
-            console.log("error" + error)
-            return res.status(500).json({message: "Internal server error"})
+        if (code !== decoded.randomCode) {
+            return res.status(400).json({message: "Invalid code"})
         }
+
+        const newToken = jsonwebtoken.sign(
+            //que vamos a guardar
+            {email: decoded.email, userType: "customer", verified: true},
+            //secret key
+            config.JWT.secret,
+            //cuando expira
+            {expiresIn: "15m"},
+        );
+
+        res.cookie("recoveryCookie", newToken, {maxAge: 15 * 60 * 1000});
+
+        return res.status(200).json({message: "Code verified successfully"})
+    } catch (error) {
+        console.log("error" + error)
+        return res.status(500).json({message: "Internal server error"})
     }
 }
 

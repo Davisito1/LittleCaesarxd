@@ -1,4 +1,4 @@
-import adminsModel from '../models/adminsModel.js';
+import adminsModel from '../models/admins.js';
 
 const adminsController = {};
 
@@ -16,10 +16,11 @@ adminsController.updateAdmin = async (req, res) => {
     try {
         let {
             name,
-            lastName,
             email,
             password,
             isVerified,
+            loginAttempts,
+            timeOut
         } = req.body;
 
         name = name?.trim();
@@ -39,6 +40,8 @@ adminsController.updateAdmin = async (req, res) => {
             email,
             password,
             isVerified,
+            loginAttempts,
+            timeOut
         }, { new: true }
         );
 

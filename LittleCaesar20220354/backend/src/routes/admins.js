@@ -1,7 +1,7 @@
 import express from "express";
 import adminsController from "../controllers/adminsController.js";
 
-const router = express.router();
+const router = express.Router();
 
 router.route("/")
 .get(adminsController.getAdmins)
