@@ -19,9 +19,11 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.6.0",
     "mongoose": "^9.7.2",
     "multer": "^2.1.1",
     "multer-storage-cloudinary": "^4.0.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "swagger-ui-express": "^5.0.1"
   }
 }

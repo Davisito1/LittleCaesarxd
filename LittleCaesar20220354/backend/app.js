@@ -16,6 +16,8 @@ import { validateAuthCookie } from "./src/middlewares/authMiddleware.js";
 import adminRoutes from "./src/routes/admins.js"
 import registerAdminRoutes from "./src/routes/registerAdmin.js";
 import loginAdminRoutes from "./src/routes/loginAdmin.js"
+import limiter from "./src/middlewares/limiter.js";
+import swaggerUI from "swagger-ui-express"
 
 //Creo una constante que es igual a la libreria Express
 const app = express();
@@ -29,6 +31,8 @@ app.use(cookieParser());
 
 //Para que la API acepte json
 app.use(express.json());
+
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup())
 
 app.use("/api/pizzas", pizzaRoutes)
 app.use("/api/branches", branchesRoutes)
